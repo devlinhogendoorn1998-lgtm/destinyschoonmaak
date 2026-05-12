@@ -16,6 +16,19 @@ body {
     color: #fff;
     font-family: 'Montserrat', sans-serif;
     overflow-x: hidden;
+    /* ── Twee-laags hexagonraster met diepte ── */
+    background-image:
+        /* Vignette: hoeken donkerder = diepte */
+        radial-gradient(ellipse 110% 110% at 50% 50%, transparent 28%, rgba(5,5,5,0.72) 100%),
+        /* Gouden gloed in het centrum */
+        radial-gradient(ellipse 70% 55% at 50% 38%, rgba(194,163,93,0.045) 0%, transparent 65%),
+        /* Groot hexagonraster — voorgrond */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='90'%3E%3Cpath d='M26,0 L52,15 L52,45 L26,60 L0,45 L0,15 Z' fill='none' stroke='%23c2a35d' stroke-opacity='.18' stroke-width='.65'/%3E%3Cpath d='M26,60 L26,90' fill='none' stroke='%23c2a35d' stroke-opacity='.18' stroke-width='.65'/%3E%3C/svg%3E"),
+        /* Klein hexagonraster — achtergrond (dieptelaag) */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='45'%3E%3Cpath d='M13,0 L26,7.5 L26,22.5 L13,30 L0,22.5 L0,7.5 Z' fill='none' stroke='%23c2a35d' stroke-opacity='.065' stroke-width='.4'/%3E%3Cpath d='M13,30 L13,45' fill='none' stroke='%23c2a35d' stroke-opacity='.065' stroke-width='.4'/%3E%3C/svg%3E");
+    background-size: 100% 100%, 100% 100%, 52px 90px, 26px 45px;
+    background-attachment: fixed;
+    background-position: 0 0, 0 0, 0 0, 13px 22.5px;
 }
 
 /* Navigatie */
@@ -190,7 +203,7 @@ nav {
 
 /* Hero */
 .hero { height: 100vh; display: flex; align-items: center; padding: 0 10%; position: relative; }
-.hero-inner { display: flex; align-items: center; gap: 5%; width: 100%; }
+.hero-inner { display: flex; align-items: center; gap: 5%; width: 100%; position: relative; z-index: 1; }
 
 .hero-text { flex: 1.2; }
 .hero-text h1 { font-family: 'Cormorant Garamond', serif; font-size: 5rem; line-height: 1; margin: 1rem 0; font-weight: 500; }
@@ -225,24 +238,64 @@ nav {
 @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .luxe-svg { animation: none; } }
 
+/* ── Hero achtergrond gloed ─────────────────────────────────────────────── */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse 50% 70% at 35% 50%, rgba(194,163,93,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 70% 35% at 68% 48%, rgba(194,163,93,0.04) 0%, transparent 60%);
+}
+
+/* ── Logo gouden gloed + puls ───────────────────────────────────────────── */
+.logo-display { position: relative; }
+.logo-display::before {
+    content: '';
+    position: absolute;
+    inset: -18%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(194,163,93,0.12) 0%, transparent 68%);
+    animation: hex-pulse 5s ease-in-out infinite;
+    z-index: 0;
+    pointer-events: none;
+}
+.luxe-svg { position: relative; z-index: 1; }
+
+@keyframes hex-pulse {
+    0%, 100% { opacity: 0.4; transform: scale(0.94); }
+    50%       { opacity: 1;   transform: scale(1.06); }
+}
+@media (prefers-reduced-motion: reduce) { .logo-display::before { animation: none; } }
+
 /* Het Luxe Formulier */
 .contact-luxe {
     padding: 10rem 0;
     display: flex;
     justify-content: center;
-    background: radial-gradient(circle at center, #111, #050505);
+    background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(14,14,14,0.55) 0%, rgba(5,5,5,0.25) 100%);
     scroll-margin-top: 80px;
+    position: relative;
 }
 
 .glass-form-container {
     width: 100%;
     max-width: 800px;
-    background: var(--glass);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
+    background: rgba(255,255,255,0.025);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(194,163,93,0.14);
+    border-top: 1px solid rgba(194,163,93,0.22);
     padding: 4rem;
     position: relative;
-    box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+    z-index: 1;
+    box-shadow:
+        0 50px 100px rgba(0,0,0,0.55),
+        0 0 0 1px rgba(194,163,93,0.05),
+        inset 0 1px 0 rgba(194,163,93,0.14),
+        0 0 90px rgba(194,163,93,0.05);
 }
 
 .form-header { margin-bottom: 3rem; text-align: center; }

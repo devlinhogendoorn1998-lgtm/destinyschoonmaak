@@ -55,9 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
     //         Variabelen in de template: {{naam}}, {{email}}, {{dienst}}, {{bericht}}
     // Stap 4: Ga naar Account → kopieer jouw Public Key
     // Vervang de drie waarden hieronder:
-    const EMAILJS_PUBLIC_KEY  = 'JOUW_PUBLIC_KEY';   // ← vervangen
-    const EMAILJS_SERVICE_ID  = 'JOUW_SERVICE_ID';   // ← vervangen
-    const EMAILJS_TEMPLATE_ID = 'JOUW_TEMPLATE_ID';  // ← vervangen
+    const EMAILJS_PUBLIC_KEY  = 'L4bbOErRdOn8VKHfM';
+    const EMAILJS_SERVICE_ID  = 'service_i8vzegh';
+    const EMAILJS_TEMPLATE_ID = 'template_slbaevo';
 
     emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 
